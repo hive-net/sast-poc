@@ -27,7 +27,8 @@ app.get('/long-method', (req, res) => {
 
 app.get('/user', async (req, res) => {
     try {
-        const result = await pool.request().query(`SELECT * FROM users WHERE id = '${req.query.userId}'`); // Vulnerable to SQL injection
+        const myQuery = `SELECT * FROM users WHERE id = '${req.query.userId}'`;
+        const result = await pool.request().query(myQuery); // Vulnerable to SQL injection
         res.json(result.recordset);
     } catch (err) {
         console.error('Error executing the query:', err);
