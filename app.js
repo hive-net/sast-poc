@@ -1,5 +1,6 @@
 const express = require('express');
 const { connectToDB } = require('./db');
+const {pool} = require("mssql/lib/global-connection");
 const app = express();
 const port = 3000;
 
@@ -22,7 +23,7 @@ app.get('/long-method', (req, res) => {
 
 app.get('/user', async (req, res) => {
     try {
-        const result = await pool.request().query('SELECT * FROM users');
+        const result = await pool.request().query(`SELECT * FROM users WHERE id = '${req.query.userId}'`); // Vulnerable to SQL injection
         res.json(result.recordset);
     } catch (err) {
         console.error('Error executing the query:', err);
