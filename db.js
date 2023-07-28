@@ -3,7 +3,7 @@ const sql = require('mssql');
 // Database configuration
 const config = {
     user: 'your_db_username',
-    password: 'your_db_password',
+    password: process.env.DB_PW,
     server: 'your_db_server',
     database: 'your_db_name',
     options: {
